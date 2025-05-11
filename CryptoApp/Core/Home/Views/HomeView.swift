@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var showPortfolio: Bool = false
+    
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
+            
             VStack {
+                HStack {
+        
+                }
                 Text("Header")
                 Spacer(minLength: 0)
             }
