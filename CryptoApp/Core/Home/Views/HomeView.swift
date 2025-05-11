@@ -15,11 +15,8 @@ struct HomeView: View {
             Color.theme.background.ignoresSafeArea()
             
             VStack {
-                HStack {
-        
-                }
-                Text("Header")
-                Spacer(minLength: 0)
+                homeHeader
+                Spacer()
             }
         }
     }
@@ -29,5 +26,32 @@ struct HomeView: View {
     NavigationStack {
         HomeView()
             .toolbar(.hidden)
+    }
+}
+
+extension HomeView {
+    private var homeHeader: some View {
+        HStack {
+            CircleButtonView(iconName: showPortfolio ? "plus" : "info")
+                .animation(.none)
+                .background(
+                    CircleButtonAnimationView(animate: $showPortfolio)
+                )
+            Spacer()
+            Text(showPortfolio ? "Portfolio" : "Live prices")
+                .font(.headline)
+                .fontWeight(.heavy)
+                .foregroundStyle(Color.theme.accent)
+                .animation(.none)
+            Spacer(minLength: 0)
+            CircleButtonView(iconName: "chevron.right")
+                .rotationEffect(Angle(degrees: showPortfolio ? 180 : 0))
+                .onTapGesture {
+                    withAnimation(.spring) {
+                        showPortfolio.toggle()
+                    }
+                }
+        }
+        .padding(.horizontal)
     }
 }
