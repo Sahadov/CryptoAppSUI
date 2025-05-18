@@ -8,6 +8,9 @@
 import Foundation
 
 struct MockData {
+    let statistic1 = Statistic(title: "Market Cap", value: "$25Bn", percantageChange: 8.5)
+    let statistic2 = Statistic(title: "Total Value", value: "$1.3Tr")
+    
     let coin = Coin(
            id: "bitcoin",
            symbol: "btc",
