@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct PortfolioView: View {
+    @EnvironmentObject private var vm: HomeViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            SearchBarView(searchText: $vm.searchText)
+                .padding()
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 10) {
+                    ForEach(vm.allCoins) { coin in
+                        Text(coin.symbol.uppercased())
+                    }
+                }
+            }
+            .navigationTitle("Edit portfolio")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    XMarkButton()
+                }
+            }
+        }
     }
 }
 
 #Preview {
     PortfolioView()
+        .environmentObject(HomeViewModel())
 }
