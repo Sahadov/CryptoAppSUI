@@ -61,6 +61,10 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    func updatePortfolio(coin: Coin, amount: Double) {
+        portfolioDataService.updatePortfolio(coin: coin, amount: amount)
+    }
+    
     private func filterCoins(text: String, coins: [Coin]) -> [Coin] {
         guard !text.isEmpty else {
             return coins
