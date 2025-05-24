@@ -22,7 +22,7 @@ struct DetailLoadingView: View {
 
 struct DetailView: View {
     @StateObject private var vm: DetailViewModel
-    let spacing: CGFloat = 5
+    let spacing: CGFloat = 10
     
     private let columns: [GridItem] = [
         GridItem(.flexible()),
@@ -39,41 +39,16 @@ struct DetailView: View {
                 Text("")
                     .frame(height: 150)
                 
-                Text("Overview")
-                    .font(.title)
-                    .bold()
-                    .foregroundStyle(Color.theme.accent)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                overviewTitle
                 Divider()
+                overviewGrid
                 
-                LazyVGrid(columns: columns,
-                          alignment: .leading,
-                          spacing: nil,
-                          pinnedViews: [],
-                          content: {
-                    ForEach(0..<6) { _ in
-                        StatisticView(stat: Statistic(title: "Title", value: "value"))
-                    }
-                    
-                })
                 
-                Text("Additional Details")
-                    .font(.title)
-                    .bold()
-                    .foregroundStyle(Color.theme.accent)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                additionalTitle
                 Divider()
+                additionalGrid
                 
-                LazyVGrid(columns: columns,
-                          alignment: .leading,
-                          spacing: spacing,
-                          pinnedViews: [],
-                          content: {
-                    ForEach(0..<6) { _ in
-                        StatisticView(stat: Statistic(title: "Title", value: "value"))
-                    }
-                    
-                })
+                
             }
             .padding()
         }
@@ -84,5 +59,50 @@ struct DetailView: View {
 #Preview {
     NavigationStack {
         DetailView(coin: MockData().coin)
+    }
+}
+
+extension DetailView {
+    
+    private var overviewTitle: some View {
+        Text("Overview")
+            .font(.title)
+            .bold()
+            .foregroundStyle(Color.theme.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var overviewGrid: some View {
+        LazyVGrid(columns: columns,
+                  alignment: .leading,
+                  spacing: spacing,
+                  pinnedViews: [],
+                  content: {
+            ForEach(vm.overviewStatistics) { stat in
+                StatisticView(stat: stat)
+            }
+            
+        })
+    }
+    
+    private var additionalTitle: some View {
+        Text("Additional Details")
+            .font(.title)
+            .bold()
+            .foregroundStyle(Color.theme.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var additionalGrid: some View {
+        LazyVGrid(columns: columns,
+                  alignment: .leading,
+                  spacing: spacing,
+                  pinnedViews: [],
+                  content: {
+            ForEach(vm.additionalStatistics) { stat in
+                StatisticView(stat: stat)
+            }
+            
+        })
     }
 }
